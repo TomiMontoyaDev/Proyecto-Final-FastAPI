@@ -18,8 +18,10 @@ export default function Login() {
 
       // 🔑 guardar sesión (viene del backend)
       localStorage.setItem("user", res.username);
+      localStorage.setItem("token", res.access_token);
 
       // 🚀 redirigir
+      alert("¡Login exitoso! Token guardado.");
     } catch (err: any) {
       setError(err.message);
     } finally {

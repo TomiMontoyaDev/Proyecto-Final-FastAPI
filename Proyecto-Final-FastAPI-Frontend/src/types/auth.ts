@@ -12,6 +12,9 @@ export type RegisterRequest = AuthRequest;
 export type LoginResponse = {
   message: string;
   username: string;
+  access_token: string;
+  refresh_token: string;
+  expires_in: number;
 };
 
 export type RegisterResponse = {
