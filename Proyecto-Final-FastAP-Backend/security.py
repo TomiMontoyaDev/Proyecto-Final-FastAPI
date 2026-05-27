@@ -1,6 +1,6 @@
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from keycloak import KeycloakOpenID
+from keycloak import KeycloakOpenID, KeycloakAdmin
 from jose import jwt  # Usamos jose directamente
 from config import settings
 
@@ -10,6 +10,13 @@ keycloak_openid = KeycloakOpenID(
     realm_name=settings.KEYCLOAK_REALM_NAME,
     client_secret_key=settings.KEYCLOAK_CLIENT_SECRET
 )
+
+# Inicialización de KeycloakAdmin para la API de Administración
+keycloak_admin = KeycloakAdmin(
+    server_url=settings.KEYCLOAK_SERVER_URL,
+    realm_name=settings.KEYCLOAK_REALM_NAME,
+    client_id=settings.KEYCLOAK_CLIENT_ID, # Usamos el mismo cliente si tiene permisos, o uno diferente
+    client_secret_key=settings.KEYCLOAK_CLIENT_SECRET)
 
 security = HTTPBearer()
 

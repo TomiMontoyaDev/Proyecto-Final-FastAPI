@@ -19,13 +19,12 @@ export default function Register() {
       const res = await registerUser({ username, password });
       console.log(res);
 
-      // opcional: feedback
       alert("Usuario registrado con exito!");
+      navigate("/"); // Redirigir al login después del registro exitoso
     } catch (err: any) {
       setError(err.message);
     } finally {
       setLoading(false);
-      navigate("/");
     }
   };
 

@@ -48,7 +48,7 @@ Temporary Items
 ### macOS Patch ###
 # iCloud generated files
 *.icloud
-
+*.pyc
 ### Python ###
 # Byte-compiled / optimized / DLL files
 __pycache__/

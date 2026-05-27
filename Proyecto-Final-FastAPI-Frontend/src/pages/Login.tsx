@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { loginUser } from "../api/auth";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Login() {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -21,7 +22,7 @@ export default function Login() {
       localStorage.setItem("token", res.access_token);
 
       // 🚀 redirigir
-      alert("¡Login exitoso! Token guardado.");
+      navigate("/profile");
     } catch (err: any) {
       setError(err.message);
     } finally {
