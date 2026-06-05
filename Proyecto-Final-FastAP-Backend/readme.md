@@ -1,6 +1,6 @@
 # Backend (FastAPI)
 
-Este directorio contiene el código del servidor FastAPI, que actúa como la API para la aplicación, gestionando la lógica de negocio y la integración con Keycloak para la autenticación.
+Este directorio contiene el código del servidor FastAPI, que actúa como la API para la aplicación, gestionando la lógica de negocio y la integración con Keycloak para la autenticación y CockroachDB para la auditoría.
 
 ## Configuración y Dependencias
 
@@ -37,11 +37,34 @@ Sigue estos pasos para configurar y levantar el servicio backend.
     ```
     Reemplaza los valores con la configuración de tu instancia de Keycloak.
 
+### Configuración de CockroachDB (Auditoría)
+
+Para que el sistema de auditoría funcione, debes crear la base de datos y la tabla en CockroachDB:
+
+1.  **Accede a la consola de CockroachDB:**
+    ```bash
+    cockroach sql --url "postgresql://root@192.168.64.2:26257?sslmode=disable"
+    ```
+
+2.  **Ejecuta los siguientes comandos SQL:**
+    ```sql
+    CREATE DATABASE laboratorio_db;
+    USE laboratorio_db;
+
+    CREATE TABLE login_events (
+        id SERIAL PRIMARY KEY,
+        username STRING NOT NULL,
+        event_type STRING NOT NULL,
+        timestamp TIMESTAMP DEFAULT current_timestamp()
+    );
+    ```
+
 ### Inicio del Servicio Backend
 
-Desde este directorio (`Proyecto-Final-FastAP-Backend`) y con el entorno virtual activado, ejecuta:
+Para que la API sea accesible desde la red de la VM, ejecútala escuchando en todas las interfaces (`0.0.0.0`):
 
 ```bash
-uvicorn main:app --reload --port 8000
+uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 ```
-Este comando iniciará el servidor FastAPI en `http://127.0.0.1:8000` con recarga automática.
+Este comando iniciará el servidor FastAPI en `http://192.168.64.2:8000/api`.
+

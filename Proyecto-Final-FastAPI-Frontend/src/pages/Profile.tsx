@@ -17,7 +17,7 @@ export default function Profile() {
       }
 
       try {
-        const res = await fetch("http://127.0.0.1:8000/protected", {
+        const res = await fetch("http://192.168.64.2/api/protected", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
